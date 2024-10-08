@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using ShopTARge23.Core.Domain;
 using ShopTARge23.Core.Dto;
 using ShopTARge23.Core.ServiceInterface;
@@ -25,12 +26,12 @@ namespace ShopTARge23.ApplicationServices.Services
 
         public void FilesToApi(SpaceshipDto dto, Spaceship spaceship)
         {
-            if (!Directory.Exists(_webHost.ContentRootPath + "\\multipleFileUpload\\"))
+            if(!Directory.Exists(_webHost.ContentRootPath + "\\multipleFileUpload\\"))
             {
                 Directory.CreateDirectory(_webHost.ContentRootPath + "\\multipleFileUpload\\");
             }
 
-            foreach (var file in dto.Files)
+            foreach(var file in dto.Files)
             {
                 string uploadsFolder = Path.Combine(_webHost.ContentRootPath, "multipleFileUpload");
                 string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
@@ -47,17 +48,17 @@ namespace ShopTARge23.ApplicationServices.Services
                         SpaceshipId = spaceship.Id
                     };
 
-                    _context.FileToApi.AddAsync(path);
+                    _context.FileToApis.AddAsync(path);
                 }
             }
         }
 
         public async Task<List<FileToApi>> RemoveImagesFromApi(FileToApiDto[] dtos)
         {
-            foreach(var dtosItem in dtos)
+            foreach(var dto in dtos)
             {
                 var imageId = await _context.FileToApis
-                    .FirstOrDefaultAsync(x => x.ExistingFilePath == dtos.ExistingFilePath);
+                    .FirstOrDefaultAsync(x => x.ExistingFilePath == dto.ExistingFilePath);
 
                 var filePath = _webHost.ContentRootPath + "\\multipleFileUpload\\"
                     + imageId.ExistingFilePath;
@@ -69,7 +70,9 @@ namespace ShopTARge23.ApplicationServices.Services
 
                 _context.FileToApis.Remove(imageId);
                 await _context.SaveChangesAsync();
-        }
+            }
+
             return null;
+        }
     }
 }

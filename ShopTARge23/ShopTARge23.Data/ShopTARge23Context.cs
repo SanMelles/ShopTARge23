@@ -11,11 +11,9 @@ namespace ShopTARge23.Data
         : base(options) { }
 
         public DbSet<Spaceship> Spaceships { get; set; }
-        public DbSet<FileToApi> FileToApi { get; set; }
+        public DbSet<FileToApi> FileToApis { get; set; }
+        public DbSet<RealEstate> RealEstates { get; set; }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //      modelBuilder.Properties<DateTime>().Configure(c => c.HasColumnType("datetime2"));
-        //}
+
     }
 }
