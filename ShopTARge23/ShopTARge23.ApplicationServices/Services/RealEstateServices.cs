@@ -10,10 +10,12 @@ namespace ShopTARge23.ApplicationServices.Services
     public class RealEstateServices : IRealEstateServices
     {
         private readonly ShopTARge23Context _context;
+        private readonly IFileServices _fileServices;
 
         public RealEstateServices
             (
-                ShopTARge23Context context
+                ShopTARge23Context context,
+                IFileServices fileServices
             )
         {
             _context = context;
@@ -31,6 +33,11 @@ namespace ShopTARge23.ApplicationServices.Services
             realEstate.CreatedAt = DateTime.Now;
             realEstate.ModifiedAt = DateTime.Now;
 
+            if ( dto != null )
+            {
+                _fileServices.UploadFilesToDatabase(dto, realEstate);
+            }
+
             await _context.RealEstates.AddAsync(realEstate);
             await _context.SaveChangesAsync();
 
@@ -41,6 +48,35 @@ namespace ShopTARge23.ApplicationServices.Services
         {
             var result = await _context.RealEstates
                 .FirstOrDefaultAsync(x => x.Id == id);
+
+            return result;
+        }
+
+        public async Task<RealEstate> Update(RealEstateDto dto)
+        {
+            RealEstate domain = new();
+
+            domain.Id = dto.Id;
+            domain.Size = dto.Size;
+            domain.Location = dto.Location;
+            domain.BuildingType = dto.BuildingType;
+            domain.RoomNumber = dto.RoomNumber;
+            domain.CreatedAt = dto.CreatedAt;
+            domain.ModifiedAt = dto.ModifiedAt;
+
+            _context.RealEstates.Update(domain);
+            await _context.SaveChangesAsync();
+
+            return domain;
+        }
+
+        public async Task<RealEstate> Delete(Guid id)
+        {
+            var result = await _context.RealEstates
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            _context.RealEstates.Remove(result);
+            await _context.SaveChangesAsync();
 
             return result;
         }
