@@ -80,6 +80,15 @@ namespace ShopTARge23.ApplicationServices.Services
             var result = await _context.RealEstates
                 .FirstOrDefaultAsync(x => x.Id == id);
 
+            var images = await _context.FileToDatabases
+                .Where(x => x.RealEstateId == id)
+                .Select(y => new FileToDatabaseDto
+                {
+                    Id = y.Id,
+                    ImageTitle = y.ImageTitle,
+                    RealEstateId = y.RealEstateId
+                }).ToArrayAsync();
+
             _context.RealEstates.Remove(result);
             await _context.SaveChangesAsync();
 
