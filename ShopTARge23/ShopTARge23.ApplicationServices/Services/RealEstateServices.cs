@@ -63,8 +63,12 @@ namespace ShopTARge23.ApplicationServices.Services
             domain.BuildingType = dto.BuildingType;
             domain.RoomNumber = dto.RoomNumber;
             domain.CreatedAt = dto.CreatedAt;
-            domain.ModifiedAt = dto.ModifiedAt;
+            domain.ModifiedAt = DateTime.Now;
 
+            if (dto != null)
+            {
+                _fileServices.UploadFilesToDatabase(dto, domain);
+            }
             _context.RealEstates.Update(domain);
             await _context.SaveChangesAsync();
 
