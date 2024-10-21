@@ -19,6 +19,7 @@ namespace ShopTARge23.ApplicationServices.Services
             )
         {
             _context = context;
+            _fileServices = fileServices;
         }
 
         public async Task<RealEstate> Create(RealEstateDto dto)
