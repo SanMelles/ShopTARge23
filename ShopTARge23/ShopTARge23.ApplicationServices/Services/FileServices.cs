@@ -26,36 +26,58 @@ namespace ShopTARge23.ApplicationServices.Services
 
         public void FilesToApi(SpaceshipDto dto, Spaceship spaceship)
         {
-            if(!Directory.Exists(_webHost.ContentRootPath + "\\multipleFileUpload\\"))
+            if (dto.Files != null && dto.Files.Count > 0)
             {
-                Directory.CreateDirectory(_webHost.ContentRootPath + "\\multipleFileUpload\\");
-            }
-
-            foreach(var file in dto.Files)
-            {
-                string uploadsFolder = Path.Combine(_webHost.ContentRootPath, "multipleFileUpload");
-                string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                if (!Directory.Exists(_webHost.ContentRootPath + "\\multipleFileUpload\\"))
                 {
-                    file.CopyTo(fileStream);
+                    Directory.CreateDirectory(_webHost.ContentRootPath + "\\multipleFileUpload\\");
+                }
 
-                    FileToApi path = new FileToApi
+                foreach (var file in dto.Files)
+                {
+                    string uploadsFolder = Path.Combine(_webHost.ContentRootPath, "multipleFileUpload");
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
-                        Id = Guid.NewGuid(),
-                        ExistingFilePath = uniqueFileName,
-                        SpaceshipId = spaceship.Id
-                    };
+                        file.CopyTo(fileStream);
 
-                    _context.FileToApis.AddAsync(path);
+                        FileToApi path = new FileToApi
+                        {
+                            Id = Guid.NewGuid(),
+                            ExistingFilePath = uniqueFileName,
+                            SpaceshipId = spaceship.Id
+                        };
+
+                        _context.FileToApis.AddAsync(path);
+                    }
                 }
             }
         }
 
+        public async Task<FileToApi> RemoveImageFromApi(FileToApiDto dto)
+        {
+            var imageId = await _context.FileToApis
+                .FirstOrDefaultAsync(x => x.Id == dto.Id);
+
+            var filePath = _webHost.ContentRootPath + "\\multipleFileUpload\\"
+                + imageId.ExistingFilePath;
+
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+
+            _context.FileToApis.Remove(imageId);
+            await _context.SaveChangesAsync();
+
+            return null;
+        }
+
         public async Task<List<FileToApi>> RemoveImagesFromApi(FileToApiDto[] dtos)
         {
-            foreach(var dto in dtos)
+            foreach (var dto in dtos)
             {
                 var imageId = await _context.FileToApis
                     .FirstOrDefaultAsync(x => x.ExistingFilePath == dto.ExistingFilePath);
@@ -87,7 +109,7 @@ namespace ShopTARge23.ApplicationServices.Services
                         {
                             Id = Guid.NewGuid(),
                             ImageTitle = image.FileName,
-                            RealEstateId = domain.Id,
+                            RealEstateId = domain.Id
                         };
 
                         image.CopyTo(target);
@@ -98,20 +120,23 @@ namespace ShopTARge23.ApplicationServices.Services
                 }
             }
         }
+
         public async Task<FileToDatabase> RemoveImageFromDatabase(FileToDatabaseDto dto)
         {
             var image = await _context.FileToDatabases
                 .Where(x => x.Id == dto.Id)
                 .FirstOrDefaultAsync();
+
             _context.FileToDatabases.Remove(image);
             await _context.SaveChangesAsync();
+
             return image;
         }
 
-        public async Task<FileToDatabase>
-RemoveImagesFromDatabase(FileToDatabaseDto[] dtos)
+
+        public async Task<FileToDatabase> RemoveImagesFromDatabase(FileToDatabaseDto[] dtos)
         {
-            foreach(var dto in dtos)
+            foreach (var dto in dtos)
             {
                 var image = await _context.FileToDatabases
                     .Where(x => x.Id == dto.Id)
