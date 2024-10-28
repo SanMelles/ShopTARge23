@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ShopTARge23.Core.Domain;
+using ShopTARge23.Core.Dto;
 
 namespace ShopTARge23.Core.ServiceInterface
 {
-    class IKindergartenServices
+    public interface IKindergartenServices
     {
+        Task<Kindergarten> Create(KindergartenDto dto);
     }
 }
