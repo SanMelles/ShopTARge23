@@ -5,8 +5,8 @@ namespace ShopTARge23.Core.ServiceInterface
 {
     public interface IKindergartenServices
     {
+        Task<Kindergarten> DetailsAsync(Guid id);
         Task<Kindergarten> Create(KindergartenDto dto);
-        Task<Kindergarten> Details(Guid id);
-
+        Task<Kindergarten> Update(KindergartenDto dto);
     }
 }

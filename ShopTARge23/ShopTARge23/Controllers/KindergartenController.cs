@@ -2,13 +2,14 @@
 using ShopTARge23.Data;
 using ShopTARge23.Models.Kindergarten;
 using ShopTARge23.Core.ServiceInterface;
+using ShopTARge23.Core.Dto;
 
 namespace ShopTARge23.Controllers
 {
     public class KindergartenController : Controller
     {
         private readonly ShopTARge23Context _context;
-        private readonly IKindergartenServices _services;
+        private readonly IKindergartenServices _kindergartenServices;
         public KindergartenController
             (
             ShopTARge23Context context,
@@ -44,15 +45,60 @@ namespace ShopTARge23.Controllers
 
             var vm = new KindergartenDetailsViewModel();
 
-            vm.Id = kindergarten.id;
-            vm.GroupName = kindergarten.groupName;
-            vm.ChildrenCount = kindergarten.childrenCount;
-            vm.KindergartenName = kindergarten.kindergartenName;
+            vm.Id = kindergarten.Id;
+            vm.GroupName = kindergarten.GroupName;
+            vm.ChildrenCount = kindergarten.ChildrenCount;
+            vm.KindergartenName = kindergarten.KindergartenName;
             vm.Teacher = kindergarten.Teacher;
-            vm.CreatedAt = kindergarten.createdAt;
-            vm.UpdatedAt = kindergarten.updatedAt;
+            vm.CreatedAt = kindergarten.CreatedAt;
+            vm.UpdatedAt = kindergarten.UpdatedAt;
 
             return View(vm);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Update(Guid id)
+        {
+            var kindergarten = await _kindergartenServices.DetailsAsync(id);
+
+            if (kindergarten == null)
+            {
+                return NotFound();
+            }
+
+            var vm = new KindergartenCreateUpdateViewModel();
+
+            vm.Id = kindergarten.Id;
+            vm.GroupName = kindergarten.GroupName;
+            vm.ChildrenCount = kindergarten.ChildrenCount;
+            vm.Teacher = kindergarten.Teacher;
+            vm.CreatedAt = kindergarten.CreatedAt;
+            vm.UpdatedAt = kindergarten.UpdatedAt;
+
+            return View("CreateUpdate", vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(KindergartenCreateUpdateViewModel vm)
+        {
+            var dto = new KindergartenDto()
+            {
+                Id = vm.Id,
+                GroupName = vm.GroupName,
+                ChildrenCount = vm.ChildrenCount,
+                Teacher = vm.Teacher,
+                CreatedAt = vm.CreatedAt,
+                UpdatedAt = vm.UpdatedAt
+            };
+
+            var result = await _kindergartenServices.Update(dto);
+
+            if(result == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index), vm);
         }
     }
 }
