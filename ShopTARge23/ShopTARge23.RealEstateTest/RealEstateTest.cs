@@ -1,5 +1,6 @@
-using ShopTARge23.Core.Dto;
+﻿using ShopTARge23.Core.Dto;
 using ShopTARge23.Core.ServiceInterface;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace ShopTARge23.RealEstateTest
 {
@@ -23,6 +24,20 @@ namespace ShopTARge23.RealEstateTest
 
             //Assert
             Assert.NotNull(result);
+
+        }
+
+        [Fact]
+        public async Task ShouldNot_GetByIdRealestate_WhenReturnsNotEqual()
+        {
+            //Arrange
+
+
+            //Act
+
+
+            //Assert
+
 
         }
     }
