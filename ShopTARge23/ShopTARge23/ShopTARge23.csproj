@@ -29,4 +29,9 @@
     <ProjectReference Include="..\ShopTARge23.Data\ShopTARge23.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Kindergarten\" />
+    <Folder Include="Views\Kindergarten\" />
+  </ItemGroup>
+
 </Project>
