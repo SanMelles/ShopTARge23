@@ -22,6 +22,14 @@ namespace ShopTARge23.ApplicationServices.Services
             _fileServices = fileServices;
         }
 
+        public async Task<Kindergarten> DetailsAsync(Guid id)
+        {
+            var result = await _context.Kindergartens
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            return result;
+        }
+
         public async Task<Kindergarten> Create(KindergartenDto dto)
         {
             Kindergarten kindergarten = new Kindergarten();
@@ -35,6 +43,17 @@ namespace ShopTARge23.ApplicationServices.Services
             kindergarten.UpdatedAt = DateTime.Now;
 
             await _context.Kindergartens.AddAsync(kindergarten);
+            await _context.SaveChangesAsync();
+
+            return kindergarten;
+        }
+
+        public async Task<Kindergarten> Delete(Guid id)
+        {
+            var kindergarten = await _context.Kindergartens
+                .FirstOrDefaultAsync(x =>x.Id == id);
+
+            _context.Kindergartens.Remove(kindergarten);
             await _context.SaveChangesAsync();
 
             return kindergarten;

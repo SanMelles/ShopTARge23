@@ -8,5 +8,6 @@ namespace ShopTARge23.Core.ServiceInterface
         Task<Kindergarten> DetailsAsync(Guid id);
         Task<Kindergarten> Create(KindergartenDto dto);
         Task<Kindergarten> Update(KindergartenDto dto);
+        Task<Kindergarten> Delete(Guid id);
     }
 }
