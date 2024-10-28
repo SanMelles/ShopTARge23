@@ -1,8 +1,51 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<ShopTARge23.Models.Kindergartens.KindergartenIndexViewModel>
+
+
+@{
+    int rowNumber = 1;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div>
+    <a asp-action="create" asp-controller="Kindergartens" type="submit" class="btn btn-primary">Create</a>
 </div>
+
+<div class="h1">
+    Kindergartens
+</div>
+<form method="post">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Nr</th>
+                <th scope="col">Group Name</th>
+                <th scope="col">Children Count</th>
+                <th scope="col">Kindergarten Name</th>
+                <th scope="col">Teacher</th>
+                <th scope="col">Created at</th>
+                <th scope="col">Updated at</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var kindergartens in Model)
+            {
+                <tr>
+                    <td>@rowNumber</td>
+                    <td>@kindergartens.GroupName</td>
+                    <td>@kindergartens.ChildrenCount</td>
+                    <td>@kindergartens.KindergartenName</td>
+                    <td>@kindergartens.Teacher</td>
+                    <td>@kindergartens.CreatedAt</td>
+                    <td>@kindergartens.UpdatedAt</td>
+                    <td>
+                        <a asp-action="details" asp-controller="kindergartens" asp-route-id="@kindergartens.Id" class="btn btn-info">Details</a>
+                        <a asp-action="update" asp-controller="kindergartens" asp-route-id="@kindergartens.Id" class="btn btn-primary">Update</a>
+                        <a asp-action="delete" asp-controller="kindergartens" asp-route-id="@kindergartens.Id" class="btn btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+
+                rowNumber += 1;
+            }
+        </tbody>
+    </table>
+</form>
