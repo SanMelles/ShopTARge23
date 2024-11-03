@@ -19,6 +19,7 @@ namespace ShopTARge23.Controllers
             _context = context;
             _kindergartenServices = kindergartenServices;
         }
+
         public IActionResult Index()
         {
             var result = _context.Kindergartens
@@ -31,6 +32,38 @@ namespace ShopTARge23.Controllers
                     CreatedAt = x.CreatedAt,
                 });
             return View(result);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            KindergartenCreateUpdateViewModel result = new();
+
+            return View("CreateUpdate", result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(KindergartenCreateUpdateViewModel vm)
+        {
+            var dto = new KindergartenDto()
+            {
+                Id = vm.Id,
+                GroupName = vm.GroupName,
+                ChildrenCount = vm.ChildrenCount,
+                KindergartenName = vm.KindergartenName,
+                Teacher = vm.Teacher,
+                CreatedAt = vm.CreatedAt,
+                UpdatedAt = vm.UpdatedAt,
+            };
+
+            var result = await _kindergartenServices.Create(dto);
+
+            if (result == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index), vm);
         }
 
         [HttpGet]
