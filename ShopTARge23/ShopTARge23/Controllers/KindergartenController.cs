@@ -28,8 +28,7 @@ namespace ShopTARge23.Controllers
                     Id = x.Id,
                     GroupName = x.GroupName,
                     KindergartenName = x.KindergartenName,
-                    Teacher = x.Teacher,
-                    CreatedAt = x.CreatedAt,
+                    Teacher = x.Teacher
                 });
             return View(result);
         }
