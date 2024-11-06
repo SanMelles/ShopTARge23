@@ -44,6 +44,14 @@
             <label asp-for="UpdatedAt" class="col-sm-2 col-form-label"></label>
             @Html.DisplayFor(model => model.UpdatedAt)
         </div>
+    <dl class="row">
+        <div class="form-group row">
+            @foreach (var images in Model.ImageViewModels)
+            {
+                <partial name="_Images" model="images" />
+            }
+        </div>
+    </dl>
     <form asp-action="DeleteConfirmation">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Delete" class="btn btn-danger" />

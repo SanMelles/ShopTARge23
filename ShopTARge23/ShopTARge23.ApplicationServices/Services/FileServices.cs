@@ -56,6 +56,31 @@ namespace ShopTARge23.ApplicationServices.Services
             }
         }
 
+        public void FilesToApi(KindergartenDto dto, Kindergarten kindergarten)
+        {
+            if (!Directory.Exists(_webHost.ContentRootPath + "\\multipleFileUpload\\"))
+            {
+                Directory.CreateDirectory(_webHost.ContentRootPath + "\\multipleFileUpload\\");
+            }
+            foreach (var file in dto.Files)
+            {
+                string uploadsFolder = Path.Combine(_webHost.ContentRootPath, "multipleFileUpload");
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                    FileToApi path = new FileToApi
+                    {
+                        Id = Guid.NewGuid(),
+                        ExistingFilePath = uniqueFileName,
+                        KindergartenId = kindergarten.Id
+                    };
+                    _context.FileToApis.AddAsync(path);
+                }
+            }
+        }
+
         public async Task<FileToApi> RemoveImageFromApi(FileToApiDto dto)
         {
             var imageId = await _context.FileToApis

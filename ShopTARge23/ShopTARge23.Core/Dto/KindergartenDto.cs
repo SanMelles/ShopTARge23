@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace ShopTARge23.Core.Dto
 {
@@ -13,8 +14,12 @@ namespace ShopTARge23.Core.Dto
         public int? ChildrenCount { get; set; }
         public string? KindergartenName { get; set; }
         public string? Teacher { get; set; }
+        public List<IFormFile> Files { get; set; }
+        public IEnumerable<FileToApiDto> FileToApiDtos { get; set; }
+            = new List<FileToApiDto>();
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+
 
     }
 }
