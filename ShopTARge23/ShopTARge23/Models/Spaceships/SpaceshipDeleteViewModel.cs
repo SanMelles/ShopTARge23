@@ -10,8 +10,8 @@
         public int? Crew { get; set; }
         public int? EnginePower { get; set; }
 
-        public List<ImageViewModel> ImageViewModels { get; set; }
-            = new List<ImageViewModel>();
+        public List<SpaceshipImageViewModel> ImageViewModels { get; set; }
+            = new List<SpaceshipImageViewModel>();
 
 
         public DateTime? CreatedAt { get; set; }

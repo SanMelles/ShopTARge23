@@ -95,7 +95,7 @@ namespace ShopTARge23.Controllers
 
             var images = await _context.FileToApis
                 .Where(x => x.SpaceshipId == id)
-                .Select(y => new ImageViewModel
+                .Select(y => new SpaceshipImageViewModel
                 {
                     FilePath = y.ExistingFilePath,
                     ImageId = y.Id
@@ -129,7 +129,7 @@ namespace ShopTARge23.Controllers
 
             var images = await _context.FileToApis
                 .Where(x => x.SpaceshipId == id)
-                .Select(y => new ImageViewModel
+                .Select(y => new SpaceshipImageViewModel
                 {
                     FilePath = y.ExistingFilePath,
                     ImageId = y.Id
@@ -197,7 +197,7 @@ namespace ShopTARge23.Controllers
 
             var images = await _context.FileToApis
                 .Where(x => x.SpaceshipId == id)
-                .Select(y => new ImageViewModel
+                .Select(y => new SpaceshipImageViewModel
                 {
                     FilePath = y.ExistingFilePath,
                     ImageId = y.Id
@@ -232,7 +232,7 @@ namespace ShopTARge23.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> RemoveImage(ImageViewModel vm)
+        public async Task<IActionResult> RemoveImage(SpaceshipImageViewModel vm)
         {
             var dto = new FileToApiDto()
             {

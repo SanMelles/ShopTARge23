@@ -3,6 +3,8 @@ using ShopTARge23.Data;
 using ShopTARge23.Models.Kindergarten;
 using ShopTARge23.Core.ServiceInterface;
 using ShopTARge23.Core.Dto;
+using Microsoft.EntityFrameworkCore;
+using ShopTARge23.Models.Spaceships;
 
 namespace ShopTARge23.Controllers
 {
@@ -85,7 +87,7 @@ namespace ShopTARge23.Controllers
 
             var images = await _context.FileToApis
                 .Where(x => x.KindergartenId == id)
-                .Select(y => new ShopTARge23.Models.Kindergarten.KindergartenImageViewModel
+                .Select(y => new ShopTARge23.Models.Kindergarten.ImageViewModel
                 {
                     FilePath = y.ExistingFilePath,
                     ImageId = y.Id
@@ -119,7 +121,7 @@ namespace ShopTARge23.Controllers
 
             var images = await _context.FileToApis
                 .Where(x => x.KindergartenId == id)
-                .Select(y => new ShopTARge23.Models.Kindergarten.KindergartenImageViewModel
+                .Select(y => new ShopTARge23.Models.Kindergarten.ImageViewModel
                 {
                     FilePath = y.ExistingFilePath,
                     ImageId = y.Id
@@ -180,7 +182,7 @@ namespace ShopTARge23.Controllers
 
             var images = await _context.FileToApis
                 .Where(x => x.KindergartenId == id)
-                .Select(y => new ShopTARge23.Models.Kindergarten.KindergartenImageViewModel
+                .Select(y => new ShopTARge23.Models.Kindergarten.ImageViewModel
                 {
                     FilePath = y.ExistingFilePath,
                     ImageId = y.Id

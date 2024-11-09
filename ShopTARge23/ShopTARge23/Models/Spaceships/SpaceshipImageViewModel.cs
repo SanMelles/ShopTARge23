@@ -1,6 +1,6 @@
 ﻿namespace ShopTARge23.Models.Spaceships
 {
-    public class ImageViewModel
+    public class SpaceshipImageViewModel
     {
         public Guid ImageId { get; set; }
         public string? FilePath { get; set; }

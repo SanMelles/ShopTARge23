@@ -64,6 +64,7 @@ namespace ShopTARge23.ApplicationServices.Services
                 }).ToArrayAsync();
 
             await _fileServices.RemoveImagesFromApi(images);
+
             _context.Kindergartens.Remove(kindergarten);
             await _context.SaveChangesAsync();
 
@@ -72,21 +73,22 @@ namespace ShopTARge23.ApplicationServices.Services
 
         public async Task<Kindergarten> Update(KindergartenDto dto)
         {
-            Kindergarten domain = new();
+            var existingKindergarten = await _context.Kindergartens
+                .FirstOrDefaultAsync(x => x.Id == dto.Id);
+            if (existingKindergarten == null)
+            {
+                throw new Exception("Kindergarten not found");
+            }
+            existingKindergarten.GroupName = dto.GroupName;
+            existingKindergarten.ChildrenCount = dto.ChildrenCount;
+            existingKindergarten.KindergartenName = dto.KindergartenName;
+            existingKindergarten.Teacher = dto.Teacher;
+            existingKindergarten.UpdatedAt = DateTime.Now;
 
-            domain.Id = dto.Id;
-            domain.GroupName = dto.GroupName;
-            domain.ChildrenCount = dto.ChildrenCount;
-            domain.KindergartenName = dto.KindergartenName;
-            domain.Teacher = dto.Teacher;
-            domain.CreatedAt = DateTime.Now;
-            domain.UpdatedAt = DateTime.Now;
-            _fileServices.FilesToApi(dto, domain.Kindergarten);
-
-            _context.Kindergartens.Update(domain);
+            _context.Kindergartens.Update(existingKindergarten);
             await _context.SaveChangesAsync();
 
-            return domain;
+            return existingKindergarten;
         }
     }
 }

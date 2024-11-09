@@ -11,8 +11,8 @@
         public int? EnginePower { get; set; }
 
         public List<IFormFile> Files { get; set; }
-        public List<ImageViewModel> Image { get; set; }
-            = new List<ImageViewModel>();
+        public List<SpaceshipImageViewModel> Image { get; set; }
+            = new List<SpaceshipImageViewModel>();
 
 
         public DateTime? CreatedAt { get; set; }
