@@ -132,6 +132,7 @@ namespace ShopTARge23.Controllers
             vm.Id = kindergarten.Id;
             vm.GroupName = kindergarten.GroupName;
             vm.ChildrenCount = kindergarten.ChildrenCount;
+            vm.KindergartenName = kindergarten.KindergartenName;
             vm.Teacher = kindergarten.Teacher;
             vm.CreatedAt = kindergarten.CreatedAt;
             vm.UpdatedAt = kindergarten.UpdatedAt;
@@ -147,6 +148,7 @@ namespace ShopTARge23.Controllers
                 Id = vm.Id,
                 GroupName = vm.GroupName,
                 ChildrenCount = vm.ChildrenCount,
+                KindergartenName = vm.KindergartenName,
                 Teacher = vm.Teacher,
                 CreatedAt = vm.CreatedAt,
                 UpdatedAt = vm.UpdatedAt,
