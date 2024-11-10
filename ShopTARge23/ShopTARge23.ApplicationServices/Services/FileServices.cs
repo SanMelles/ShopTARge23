@@ -4,6 +4,9 @@ using ShopTARge23.Core.Domain;
 using ShopTARge23.Core.Dto;
 using ShopTARge23.Core.ServiceInterface;
 using ShopTARge23.Data;
+using System.IO;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 
 namespace ShopTARge23.ApplicationServices.Services
@@ -58,25 +61,31 @@ namespace ShopTARge23.ApplicationServices.Services
 
         public void FilesToApi(KindergartenDto dto, Kindergarten kindergarten)
         {
-            if (!Directory.Exists(_webHost.ContentRootPath + "\\multipleFileUpload\\"))
+            if (dto.Files != null && dto.Files.Count > 0)
             {
-                Directory.CreateDirectory(_webHost.ContentRootPath + "\\multipleFileUpload\\");
-            }
-            foreach (var file in dto.Files)
-            {
-                string uploadsFolder = Path.Combine(_webHost.ContentRootPath, "multipleFileUpload");
-                string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                if (!Directory.Exists(_webHost.ContentRootPath + "\\multipleFileUpload\\"))
                 {
-                    file.CopyTo(fileStream);
-                    FileToApi path = new FileToApi
+                    Directory.CreateDirectory(_webHost.ContentRootPath + "\\multipleFileUpload\\");
+                }
+                foreach (var file in dto.Files)
+                {
+                    string uploadsFolder = Path.Combine(_webHost.ContentRootPath, "multipleFileUpload");
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
-                        Id = Guid.NewGuid(),
-                        ExistingFilePath = uniqueFileName,
-                        KindergartenId = kindergarten.Id
-                    };
-                    _context.FileToApis.AddAsync(path);
+                        file.CopyTo(fileStream);
+
+                        FileToApi path = new FileToApi
+                        {
+                            Id = Guid.NewGuid(),
+                            ExistingFilePath = uniqueFileName,
+                            KindergartenId = kindergarten.Id
+                        };
+
+                        _context.FileToApis.AddAsync(path);
+                    }
                 }
             }
         }
@@ -171,14 +180,13 @@ namespace ShopTARge23.ApplicationServices.Services
 
         public async Task<FileToDatabase> RemoveImageFromDatabase(FileToDatabaseDto dto)
         {
-            var image = await _context.FileToDatabases
-                .Where(x => x.Id == dto.Id)
-                .FirstOrDefaultAsync();
+            var imageId = await _context.FileToDatabases
+                .FirstOrDefaultAsync(x => x.Id == dto.Id);
 
-            _context.FileToDatabases.Remove(image);
+            _context.FileToDatabases.Remove(imageId);
             await _context.SaveChangesAsync();
 
-            return image;
+            return imageId;
         }
 
 
@@ -186,11 +194,10 @@ namespace ShopTARge23.ApplicationServices.Services
         {
             foreach (var dto in dtos)
             {
-                var image = await _context.FileToDatabases
-                    .Where(x => x.Id == dto.Id)
-                    .FirstOrDefaultAsync();
+                var imageId = await _context.FileToDatabases
+                    .FirstOrDefaultAsync(x => x.Id == dto.Id);
 
-                _context.FileToDatabases.Remove(image);
+                _context.FileToDatabases.Remove(imageId);
                 await _context.SaveChangesAsync();
             }
 

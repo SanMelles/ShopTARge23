@@ -32,16 +32,22 @@ namespace ShopTARge23.ApplicationServices.Services
 
         public async Task<Kindergarten> Create(KindergartenDto dto)
         {
-            Kindergarten kindergarten = new Kindergarten();
+            Kindergarten kindergarten = new Kindergarten
 
-            kindergarten.Id = Guid.NewGuid();
-            kindergarten.GroupName = dto.GroupName;
-            kindergarten.ChildrenCount = dto.ChildrenCount;
-            kindergarten.KindergartenName = dto.KindergartenName;
-            kindergarten.Teacher = dto.Teacher;
-            kindergarten.CreatedAt = DateTime.Now;
-            kindergarten.UpdatedAt = DateTime.Now;
-            _fileServices.FilesToApi(dto, kindergarten);
+            {
+                Id = Guid.NewGuid(),
+                GroupName = dto.GroupName,
+                ChildrenCount = dto.ChildrenCount ?? 0,
+                KindergartenName = dto.KindergartenName,
+                Teacher = dto.Teacher,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+            };
+
+            if (dto.Files != null)
+            {
+                _fileServices.UploadFilesToDatabase(dto, kindergarten);
+            }
 
             await _context.Kindergartens.AddAsync(kindergarten);
             await _context.SaveChangesAsync();
@@ -54,16 +60,21 @@ namespace ShopTARge23.ApplicationServices.Services
             var kindergarten = await _context.Kindergartens
                 .FirstOrDefaultAsync(x =>x.Id == id);
 
-            var images = await _context.FileToApis
+            if (kindergarten == null)
+            {
+                throw new Exception("Kindergarten not found");
+            }
+
+            var images = await _context.FileToDatabases
                 .Where(x => x.KindergartenId == id)
-                .Select(y => new FileToApiDto
+                .Select(y => new FileToDatabaseDto
                 {
                     Id = y.Id,
-                    KindergartenId = y.KindergartenId,
-                    ExistingFilePath = y.ExistingFilePath,
+                    ImageTitle = y.ImageTitle,
+                    KindergartenId = y.KindergartenId
                 }).ToArrayAsync();
 
-            await _fileServices.RemoveImagesFromApi(images);
+            await _fileServices.RemoveImagesFromDatabase(images);
 
             _context.Kindergartens.Remove(kindergarten);
             await _context.SaveChangesAsync();
@@ -80,10 +91,15 @@ namespace ShopTARge23.ApplicationServices.Services
                 throw new Exception("Kindergarten not found");
             }
             existingKindergarten.GroupName = dto.GroupName;
-            existingKindergarten.ChildrenCount = dto.ChildrenCount;
+            existingKindergarten.ChildrenCount = dto.ChildrenCount ?? 0;
             existingKindergarten.KindergartenName = dto.KindergartenName;
             existingKindergarten.Teacher = dto.Teacher;
             existingKindergarten.UpdatedAt = DateTime.Now;
+
+            if (dto.Files != null)
+            {
+                _fileServices.UploadFilesToDatabase(dto, existingKindergarten);
+            }
 
             _context.Kindergartens.Update(existingKindergarten);
             await _context.SaveChangesAsync();

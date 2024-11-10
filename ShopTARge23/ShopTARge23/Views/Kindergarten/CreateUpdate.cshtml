@@ -42,24 +42,32 @@ else
             <label asp-for="Files" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-5">
                 <div class="custom-file">
-                    <input class="form-control" asp-for="Files" multiple type="file" />
+                    <input class="form-control custom-file-input" asp-for="Files" multiple type="file" />
+                    <label class="custom-file-label">Choose file...</label>
                 </div>
             </div>
         </div>
 
-        @foreach (var images in Model.Image)
-        {
-            <partial name="_Images" model="images" />
-        }
+        <div>
+            @foreach (var images in Model.Image)
+            {
+                <partial name="_Images" model="images" />
+                <input asp-action="RemoveImage" asp-controller="Kindergarten" asp-route-imageId="@images.ImageId" type="submit"
+                       class="btn btn-danger" value="Remove Image" />
+            }
+        </div>
+
+        <hr />
 
         @if (Model.Id.HasValue)
         {
-            <input asp-action="update" asp-controller="Kindergarten" type="submit" class="btn btn-primary" value="Update" />
+            <input asp-action="Update" asp-controller="Kindergarten" type="submit" class="btn btn-primary" value="Update" />
         }
         else
         {
-            <input asp-action="create" asp-controller="Kindergarten" type="submit" class="btn btn-primary" value="Create" />
+            <input asp-action="Create" asp-controller="Kindergarten" type="submit" class="btn btn-primary" value="Create" />
         }
-        
+
+        <a asp-action="Index" asp-controller="Kindergartens class="btn btn-success">Back</a>
     </form>
 </div>
