@@ -1,6 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using ShopTARge23.Core.Dto;
 using ShopTARge23.Core.ServiceInterface;
+using ShopTARge23.Data;
+using ShopTARge23.Core.Domain;
 
 
 namespace ShopTARge23.Tests
@@ -59,6 +62,34 @@ namespace ShopTARge23.Tests
             var result = await SvC<IKindergartenServices>().Create(dto);
 
             Assert.NotNull(result);
+        }
+
+        [Fact]
+        public async Task Should_CreateKindergarten_InDatabase()
+        {
+            var options = new DbContextOptionsBuilder<ShopTARge23Context>()
+                .UseInMemoryDatabase("TestDatabase")
+                .Options;
+
+            using var dbContext = new ShopTARge23Context(options);
+
+            var kindergarten = new Kindergarten
+            {
+                GroupName = "Kutsikad",
+                ChildrenCount = 22,
+                KindergartenName = "Suva",
+                Teacher = "Triin",
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+            };
+
+            dbContext.Kindergartens.Add(kindergarten);
+            await dbContext.SaveChangesAsync();
+
+            var result = await dbContext.Kindergartens.FirstOrDefaultAsync(k => k.GroupName == "Kutsikad");
+
+            Assert.NotNull(result);
+            Assert.Equal(kindergarten.KindergartenName, result.KindergartenName);
         }
     }
 }
