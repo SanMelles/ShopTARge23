@@ -4,9 +4,9 @@ using ShopTARge23.Core.ServiceInterface;
 using ShopTARge23.Data;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
-using ShopTARge23.RealEstateTest.Macros;
+using ShopTARge23.Tests.Macros;
 using Microsoft.Extensions.Hosting;
-using ShopTARge23.RealEstateTest.Mock;
+using ShopTARge23.Tests.Mock;
 
 namespace ShopTARge23.RealEstateTest
 {
@@ -28,6 +28,7 @@ namespace ShopTARge23.RealEstateTest
 
         public virtual void SetupServices(IServiceCollection services)
         {
+            services.AddScoped<IKindergartenServices, KindergartenServices>();
 
         }
     }
