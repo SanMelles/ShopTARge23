@@ -1,6 +1,6 @@
-﻿namespace ShopTARge23.Core.Dto
+﻿namespace ShopTARge23.Models.Emails
 {
-    public class EmailDto
+    public class EmailViewModel
     {
         public string To { get; set; } = string.Empty;
         public string Subject { get; set; } = string.Empty;
