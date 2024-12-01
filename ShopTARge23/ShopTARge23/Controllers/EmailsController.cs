@@ -31,8 +31,8 @@ namespace ShopTARge23.Controllers
                 Body = vm.Body,
             };
 
-
-            return RedirectToAction("Index");
+            _emailServices.SendEmail(dto);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

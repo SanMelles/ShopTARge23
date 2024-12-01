@@ -9,6 +9,6 @@ namespace ShopTARge23.Core.ServiceInterface
 {
     public interface IEmailServices
     {
-        void SendEmail(EmailDto dto);
+        public void SendEmail(EmailDto dto);
     }
 }

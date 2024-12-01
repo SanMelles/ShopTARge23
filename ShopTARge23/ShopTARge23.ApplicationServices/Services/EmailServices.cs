@@ -1,20 +1,26 @@
-﻿using ShopTARge23.Core.Dto;
+﻿using Microsoft.Extensions.Configuration;
+using ShopTARge23.Core.Dto;
 using MimeKit;
-using ShopTARge23.ApplicationServices.Services;
-using Castle.Core.Configuration;
-using System.Net.Mail;
 using ShopTARge23.Core.ServiceInterface;
+using MailKit.Net.Smtp;
 
 namespace ShopTARge23.ApplicationServices.Services
 {
     public class EmailServices : IEmailServices
     {
         private readonly IConfiguration _config;
+        public EmailServices
+            (
+            IConfiguration config
+            )
+        {
+            _config = config;
+        }
 
         public void SendEmail(EmailDto dto)
         {
             var email = new MimeMessage();
-            email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUserName".Value));
+            email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUserName").Value));
             email.To.Add(MailboxAddress.Parse(dto.To));
             email.Subject = dto.Subject;
             email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
@@ -29,12 +35,6 @@ namespace ShopTARge23.ApplicationServices.Services
             smtp.Authenticate(_config.GetSection("EmailUsername").Value, _config.GetSection("EmailPassword").Value);
             smtp.Send(email);
             smtp.Disconnect(true);
-
-
-            //siin tuleb valida õige port ja kasutada securesocket optionit
-            //autentida
-            //saada email
-            //vabasta ressurss
         }
     }
 }
