@@ -8,6 +8,7 @@ namespace ShopTARge23.Controllers
     public class OpenWeatherMapsController : Controller
     {
         private readonly IOpenWeatherMapServices _openWeatherMapServices;
+
         public OpenWeatherMapsController
             (
                 IOpenWeatherMapServices openWeatherMapServices
@@ -15,33 +16,52 @@ namespace ShopTARge23.Controllers
         {
             _openWeatherMapServices = openWeatherMapServices;
         }
+
         public IActionResult Index()
         {
             ViewData["Title"] = "OpenWeatherMap";
             return View();
         }
+
         [HttpPost]
         public IActionResult SearchCity(OpenWeatherMapsSearchViewModel model)
         {
             if (ModelState.IsValid)
             {
-                return RedirectToAction("City", "OpenWeatherMaps", new { city = model.CityName });
+                return RedirectToAction("City", "OpenWeatherMaps", new { city = model.Name });
             }
+
             return View(model);
         }
+
         [HttpGet]
         public IActionResult City(string city)
         {
             OpenWeatherMapRootDto dto = new();
-            dto.CityName = city;
+            dto.Name = city;
+
             _openWeatherMapServices.OpenWeatherMapResult(dto);
-            OpenWeatherMapsViewModel vm = new();
-            vm.CityName = dto.CityName;
-            vm.Temp = dto.Main.Temp;
-            vm.FeelsLike = dto.Main.FeelsLike;
-            vm.Humidity = dto.Main.Humidity;
-            vm.Pressure = dto.Main.Pressure;
-            vm.Speed = dto.Wind.Speed;
+
+            OpenWeatherMapsViewModel vm = new OpenWeatherMapsViewModel
+            {
+                Name = dto.Name,
+                Temp = dto.Main.Temp,
+                FeelsLike = dto.Main.FeelsLike,
+                Pressure = dto.Main.Pressure,
+                Humidity = dto.Main.Humidity,
+                WindSpeed = dto.Wind.Speed,
+                WeatherConditions = dto.Weather.Select(w => new WeatherCondition
+                {
+                    Main = w.Main,
+                    Description = w.Description,
+                }).ToList(),
+            };
+
+
+
+
+
+
             return View("City", vm);
         }
     }
