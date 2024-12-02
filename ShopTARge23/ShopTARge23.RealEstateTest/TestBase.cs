@@ -4,9 +4,9 @@ using ShopTARge23.Core.ServiceInterface;
 using ShopTARge23.Data;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
-using ShopTARge23.Tests.Macros;
+using ShopTARge23.RealEstateTest.Macros;
 using Microsoft.Extensions.Hosting;
-using ShopTARge23.Tests.Mock;
+using ShopTARge23.RealEstateTest.Mock;
 
 namespace ShopTARge23.RealEstateTest
 {

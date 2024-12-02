@@ -28,6 +28,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ShopTARge23.ApplicationServices\ShopTARge23.ApplicationServices.csproj" />
+    <ProjectReference Include="..\ShopTARge23.Core\ShopTARge23.Core.csproj" />
+    <ProjectReference Include="..\ShopTARge23.Data\ShopTARge23.Data.csproj" />
+    <ProjectReference Include="..\ShopTARge23\ShopTARge23.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
 
