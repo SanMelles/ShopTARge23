@@ -22,6 +22,7 @@ namespace ShopTARge23
             builder.Services.AddScoped<IKindergartenServices, KindergartenServices>();
             builder.Services.AddScoped<IChuckNorrisServices, ChuckNorrisServices>();
             builder.Services.AddScoped<IFreeToGamesServices, FreeToGamesServices>();
+            builder.Services.AddScoped<IWeatherForecastServices, WeatherForecastServices>();
             builder.Services.AddScoped<IEmailServices, EmailServices>();
 
 

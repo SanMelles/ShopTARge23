@@ -1,11 +1,11 @@
-﻿@model ShopTARge23.Models.AccuWeathers.AccuWeatherSearchViewModel
+﻿@model ShopTARge23.Models.AccuWeathers.AccuWeathersIndexViewModel
 
 <h1>Search City</h1>
 
 <div class="container">
     <form method="post">
         <div class="container">
-            <div class="form-group col-md-offset-3 col-md-5">
+            <div class="form-group col-md-offset-3 col-md-5 mb-2">
                 <h2>Search the foreacst in a city</h2>
                 <label asp-for="CityName" style="font-family: Arial"></label>
                 <input asp-for="CityName" class="form-control" />
@@ -14,7 +14,7 @@
         </div>
         <div class="container">
             <div class="form-group col-md-offset-3 col-md-5">
-                <button asp-controller="accuWeathers" asp-action="searchCity" class="btn btn-primary">Search</button>
+                <button asp-controller="AccuWeathers" asp-action="searchCity" class="btn btn-primary">Search</button>
             </div>
         </div>
     </form>

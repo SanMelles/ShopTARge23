@@ -172,6 +172,4 @@ namespace ShopTARge23.Core.Dto.WeatherDtos.AccuWeatherDtos
         [JsonPropertyName("NextOffsetChange")]
         public DateTime NextOffsetChange { get; set; }
     }
-
-
 }
