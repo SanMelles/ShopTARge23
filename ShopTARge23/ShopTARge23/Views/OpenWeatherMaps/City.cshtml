@@ -1,59 +1,64 @@
 ﻿@model ShopTARge23.Models.OpenWeatherMaps.OpenWeatherMapsIndexViewModel
 
-<div class="container mt-5">
-    <div class="card text-white bg-dark mb-3" style="max-width: 45rem;">
-        <div class="card-header">
-            <h5 class="card-title">@DateTime.Now.ToString("dd/MM/yyyy") Daily forecast for @Model.Name</h5>
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card text-white bg-dark mb-3" style="max-width: 45rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
+        <div class="card-header text-center">
+            <h5 class="card-title">@DateTime.Now.ToString("dd/MM/yyyy") Daily Forecast for @Model.Name</h5>
         </div>
         <div class="card-body">
 
             <div class="form-group row">
-                <label class="col-sm-4 col-form-label">City:</label>
-                <div class="col-sm-8">
-                    <label class="col-form-label">@Model.Name</label>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Temperature:</label>
-                <div class="col-sm-8">
-                    <label class="col-form-label">@Model.Temp °C</label>
+                <label class="col-sm-5 col-form-label font-weight-bold">City:</label>
+                <div class="col-sm-7">
+                    <span class="col-form-label">@Model.Name</span>
                 </div>
             </div>
 
             <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Temperature Feels Like:</label>
-                <div class="col-sm-8">
-                    <label class="col-form-label">@Model.FeelsLike °C</label>
+                <label class="col-sm-5 col-form-label font-weight-bold">Temperature:</label>
+                <div class="col-sm-7">
+                    <span class="col-form-label">@Model.Temp °C</span>
                 </div>
             </div>
 
             <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Humidity:</label>
-                <div class="col-sm-8">
-                    <label class="col-form-label">@Model.Humidity %</label>
+                <label class="col-sm-5 col-form-label font-weight-bold">Temperature Feels Like:</label>
+                <div class="col-sm-7">
+                    <span class="col-form-label">@Model.FeelsLike °C</span>
                 </div>
             </div>
 
             <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Pressure:</label>
-                <div class="col-sm-8">
-                    <label class="col-form-label">@Model.Pressure Hpa</label>
+                <label class="col-sm-5 col-form-label font-weight-bold">Humidity:</label>
+                <div class="col-sm-7">
+                    <span class="col-form-label">@Model.Humidity %</span>
                 </div>
             </div>
 
             <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Wind Speed:</label>
-                <div class="col-sm-8">
-                    <label class="col-form-label">@Model.WindSpeed m/s</label>
+                <label class="col-sm-5 col-form-label font-weight-bold">Pressure:</label>
+                <div class="col-sm-7">
+                    <span class="col-form-label">@Model.Pressure Hpa</span>
                 </div>
             </div>
 
             <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Weather Condition:</label>
-                <div class="col-sm-8">
-                    <label class="col-form-label">@Model.WeatherConditions[0].Main</label>
+                <label class="col-sm-5 col-form-label font-weight-bold">Wind Speed:</label>
+                <div class="col-sm-7">
+                    <span class="col-form-label">@Model.WindSpeed m/s</span>
                 </div>
             </div>
+
+            <div class="form-group row">
+                <label class="col-sm-5 col-form-label font-weight-bold">Weather Condition:</label>
+                <div class="col-sm-7">
+                    <span class="col-form-label">@Model.WeatherConditions[0].Main</span>
+                </div>
+            </div>
+
+        </div>
+        <div class="card-footer text-center">
+            <a href="javascript:history.back()" class="btn btn-success">Return</a>
         </div>
     </div>
 </div>
