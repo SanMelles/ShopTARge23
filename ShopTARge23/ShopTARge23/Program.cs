@@ -24,6 +24,7 @@ namespace ShopTARge23
             builder.Services.AddScoped<IFreeToGamesServices, FreeToGamesServices>();
             builder.Services.AddScoped<IWeatherForecastServices, WeatherForecastServices>();
             builder.Services.AddScoped<IEmailServices, EmailServices>();
+            builder.Services.AddScoped<IOpenWeatherMapServices, OpenWeatherMapServices>();
 
 
             builder.Services.AddDbContext<ShopTARge23Context>(options =>
