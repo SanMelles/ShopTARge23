@@ -6,7 +6,7 @@ namespace ShopTARge23.Models.Accounts
     {
         [Required]
         [EmailAddress]
-        [ValidEmailDomain(allowedDomain: ".com", ErrorMessage = "Email domain must be .com")]
+        //[ValidEmailDomain(allowedDomain: ".com", ErrorMessage = "Email domain must be .com")]
         public string Email { get; set; }
         [Required]
         [DataType(DataType.Password)]
