@@ -1,5 +1,9 @@
 ﻿﻿@using Microsoft.AspNetCore.Identity;
 @inject SignInManager<ShopTARge23.Core.Domain.ApplicationUser> signInManager;
+@inject UserManager<ShopTARge23.Core.Domain.ApplicationUser> userManager;
+@{
+    var user = await userManager.GetUserAsync(User);
+}
 
 
 <!DOCTYPE html>
