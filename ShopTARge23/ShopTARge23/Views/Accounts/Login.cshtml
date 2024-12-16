@@ -8,16 +8,27 @@
         <hr />
         <form method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
+
+            <!-- Email Field -->
             <div class="form-group">
                 <label asp-for="Email"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
+
+            <!-- Password Field with Show/Hide Icon -->
             <div class="form-group">
                 <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control" />
+                <div class="input-group">
+                    <input asp-for="Password" class="form-control" type="password" id="password" />
+                    <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                        👁️
+                    </button>
+                </div>
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
+
+            <!-- Remember Me Checkbox -->
             <div class="form-group">
                 <div class="checkbox">
                     <label asp-for="RememberMe">
@@ -26,14 +37,19 @@
                     </label>
                 </div>
             </div>
+
+            <!-- Submit Button -->
             <button type="submit" class="btn btn-primary">
                 Login
             </button>
+
+            <!-- Forgot Password Link -->
             <div>
                 <a asp-action="ForgotPassword">Forgot Password?</a>
             </div>
         </form>
     </div>
+
     <div class="col-md-6">
         <h1>External Login</h1>
         <hr />
@@ -45,3 +61,28 @@
         }
     </div>
 </div>
+
+<div>
+    <p>
+        Didn't receive a confirmation email?
+        <a asp-action="ResendConfirmationEmail">Click here to resend it</a>
+    </p>
+</div>
+
+
+@section Scripts {
+    <script>
+        // Get the toggle button and the password input field
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        togglePassword.addEventListener('click', function () {
+            // Check the current type of the input field
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            // Change the eye icon (optional)
+            this.textContent = type === 'password' ? '👁️' : '🙈';
+        });
+    </script>
+}

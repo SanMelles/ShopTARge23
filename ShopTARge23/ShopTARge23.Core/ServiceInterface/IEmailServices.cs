@@ -10,5 +10,7 @@ namespace ShopTARge23.Core.ServiceInterface
     public interface IEmailServices
     {
         public void SendEmail(EmailDto dto);
+
+        void SendEmailToken(EmailTokenDto dto, string token);
     }
 }

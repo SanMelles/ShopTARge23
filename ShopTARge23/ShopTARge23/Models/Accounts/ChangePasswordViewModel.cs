@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+
 namespace ShopTARge23.Models.Accounts
 {
     public class ChangePasswordViewModel
