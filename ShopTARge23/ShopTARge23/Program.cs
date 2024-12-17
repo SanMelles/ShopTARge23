@@ -29,6 +29,14 @@ namespace ShopTARge23
             builder.Services.AddScoped<IEmailServices, EmailServices>();
             builder.Services.AddScoped<IOpenWeatherMapServices, OpenWeatherMapServices>();
 
+            var services = builder.Services;
+            var configuration = builder.Configuration;
+
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = configuration["Authentication:Facebook:AppId"];
+                facebookOptions.AppSecret = configuration["Authentication:Facebook:AppSecret"];
+            });
 
             builder.Services.AddDbContext<ShopTARge23Context>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
