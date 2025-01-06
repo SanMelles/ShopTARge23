@@ -6,6 +6,7 @@ using ShopTARge23.Data;
 using ShopTARge23.Core.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
+using ShopTARge23.Hubs;
 
 
 namespace ShopTARge23
@@ -18,6 +19,8 @@ namespace ShopTARge23
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddSignalR();
 
             builder.Services.AddScoped<ISpaceshipsServices, SpaceshipsServices>();
             builder.Services.AddScoped<IFileServices, FileServices>();
@@ -54,6 +57,18 @@ namespace ShopTARge23
             .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CustomEmailConfirmation")
             .AddDefaultUI();
 
+            builder.Services.AddAuthentication()
+                //.AddFacebook(options =>
+                //{
+                //    options.AppId = "";
+                //    options.AppSecret = "";
+                //})
+                .AddGoogle(options =>
+                {
+                    options.ClientId = "494818291692-roe5lj5l4m3rnmkq6ltgn29ojs5ub96l.apps.googleusercontent.com";
+                    options.ClientSecret = "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";
+                });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -81,6 +96,7 @@ namespace ShopTARge23
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.MapHub<ChatHub>("/chatHub");
 
             app.Run();
         }
