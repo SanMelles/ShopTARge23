@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopTARge23.Data", "ShopTAR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopTARge23.RealEstateTest", "ShopTARge23.RealEstateTest\ShopTARge23.RealEstateTest.csproj", "{F502FB5F-706E-42A8-8022-3C7FE10EF6D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeleniumTestingProject", "SeleniumTestingProject\SeleniumTestingProject.csproj", "{7A36B533-DB0F-4D61-9280-7C32E5B7DFB7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{F502FB5F-706E-42A8-8022-3C7FE10EF6D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F502FB5F-706E-42A8-8022-3C7FE10EF6D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F502FB5F-706E-42A8-8022-3C7FE10EF6D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A36B533-DB0F-4D61-9280-7C32E5B7DFB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A36B533-DB0F-4D61-9280-7C32E5B7DFB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A36B533-DB0F-4D61-9280-7C32E5B7DFB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A36B533-DB0F-4D61-9280-7C32E5B7DFB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
